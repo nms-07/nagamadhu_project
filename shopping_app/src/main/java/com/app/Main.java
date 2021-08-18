@@ -13,14 +13,17 @@ import com.app.dao.impl.ProductAddDAOImpl;
 import com.app.exception.BusinessException;
 import com.app.model.Cart;
 import com.app.model.Customer;
+import com.app.model.Order;
 import com.app.model.Product;
 import com.app.search.service.CustomerSearchService;
 import com.app.search.service.impl.CustomerSearchServiceImpl;
 import com.app.service.impl.AddProductToCartServiceImpl;
 import com.app.service.impl.CustomerLoginServiceImpl;
 import com.app.service.impl.ListProductsServiceImpl;
+import com.app.service.impl.MarkOrderStatusServiceImpl;
 import com.app.service.impl.PlaceAnOrderServiceImpl;
 import com.app.service.impl.ViewCartServiceImpl;
+import com.app.service.impl.ViewMyOrdersServiceImpl;
 public class Main {
 	
 	private static Logger log = Logger.getLogger(Main.class);
@@ -267,10 +270,31 @@ public class Main {
 								
 								break;
 							case 5:
-								log.info("Processing Request");
+								log.info("Enter the Product Id to mark it as Received");
+								int prid = 0;
+								try {
+									prid = Integer.parseInt(scan.nextLine());
+								} catch (NumberFormatException e) {}
+								MarkOrderStatusServiceImpl markOrderServiceImpl = new MarkOrderStatusServiceImpl();
+								try {
+									Order order = new Order();
+									order.setCustomerId(CustomerLoginDAOImpl.cd);
+									order.setProductId(prid);
+									markOrderServiceImpl.markOrderStatus(order);
+								}catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
+								
 								break;
 							case 6:
-								log.info("Processing Request");
+								Order order = new Order();
+								ViewMyOrdersServiceImpl viewMyOrdersService = new ViewMyOrdersServiceImpl();
+								try {
+									log.info(viewMyOrdersService.viewMyOrders(order));
+									
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
 								break;
 							case 7:
 								log.info("Visit again");
