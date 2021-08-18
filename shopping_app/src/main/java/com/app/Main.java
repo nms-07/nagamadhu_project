@@ -20,6 +20,7 @@ import com.app.search.service.impl.CustomerSearchServiceImpl;
 import com.app.service.impl.AddProductToCartServiceImpl;
 import com.app.service.impl.CustomerLoginServiceImpl;
 import com.app.service.impl.ListProductsServiceImpl;
+import com.app.service.impl.MarkDeliveredServiceImpl;
 import com.app.service.impl.MarkOrderStatusServiceImpl;
 import com.app.service.impl.PlaceAnOrderServiceImpl;
 import com.app.service.impl.ViewCartServiceImpl;
@@ -113,6 +114,7 @@ public class Main {
 
 							switch(opt) {
 							case 1:
+//Search Customer By Id
 								log.info("Enter customer id to get Customer details");
 								try {
 								int id=Integer.parseInt(scan.nextLine());
@@ -128,6 +130,7 @@ public class Main {
 								}
 								break;
 							case 2:
+//Search Customer By Name	
 								log.info("Enter customer name to get Customer details");
 								try {
 								String name = scan.nextLine();
@@ -137,12 +140,13 @@ public class Main {
 									for(Customer customer:customers) {
 										log.info(customer);
 									}
-								}
-							} catch (BusinessException e) {
+								 }
+							    } catch (BusinessException e) {
 								log.warn(e.getMessage());
-							}
+							    }
 								break;
 							case 3:
+//Search By Email
 								log.info("Enter customer Email to get Customer details");
 								try {
 								String email= scan.nextLine();
@@ -156,16 +160,56 @@ public class Main {
 								}
 								break;
 							case 4:
-								log.info("Processing Request");
+//Mark the Status
+//								log.info("ENTER CUSTOMER ID");
+//								int id = 0;
+//								try {
+//									id = Integer.parseInt(scan.nextLine());
+//								} catch (NumberFormatException e) {}
+//								log.info("ENTER PRODUCT ID");
+//								int pid = 0;
+//								try {
+//									pid = Integer.parseInt(scan.nextLine());
+//								} catch (NumberFormatException e) {}
+//								MarkDeliveredServiceImpl markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
+//								try {
+//									Order order = new Order();
+//									order.setCustomerId(id);
+//									order.setProductId(pid);
+//									markDeliveredServiceImpl.markDelivered(order);
+//								}catch (BusinessException e) {
+//									System.out.println(e.getMessage());
+//								}
+								
 								break;
 							}
 							
 						 }while(opt!=5);
-					   break;				
+					 break;
+					case 4:
+						log.info("ENTER CUSTOMER ID");
+						int id = 0;
+						try {
+							id = Integer.parseInt(scan.nextLine());
+						} catch (NumberFormatException e) {}
+						log.info("ENTER PRODUCT ID");
+						int pid = 0;
+						try {
+							pid = Integer.parseInt(scan.nextLine());
+						} catch (NumberFormatException e) {}
+						MarkDeliveredServiceImpl markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
+						try {
+							Order order = new Order();
+							order.setCustomerId(id);
+							order.setProductId(pid);
+							markDeliveredServiceImpl.markDelivered(order);
+						}catch (BusinessException e) {
+							System.out.println(e.getMessage());
+						}
 					}
 				}while(op!=5);
 				
-				break;
+			break;
 			case 2:
 				log.info("ENTER YOUR EMAIL");
 				String customerEmail = scan.nextLine();
@@ -310,73 +354,6 @@ public class Main {
 				} catch (BusinessException e) {
 					System.out.println(e.getMessage());
 				}
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-//					log.info("\nWelcome");
-//					log.info("\n Ready to surf shopping?");
-//					log.info("\n      --Money has no meaning without a need--");
-//					log.info("             -Make that need meaningful-");
-//					log.info("                      Naga Madhu");
-//					int o = 0;
-//					do {
-//						log.info("\n------------------------------------------------------");
-//						log.info("| 1. List the available products                     |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 2. Add a product to the Cart                       |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 3. View the Cart with product list and total       |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 4. PLace orders on the items in the Cart           |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 5. Mark the order as received                      |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 6. View all my orders and it's status              |");
-//						log.info("------------------------------------------------------");
-//						log.info("| 7. Logout                                          |");
-//						log.info("------------------------------------------------------");
-//						
-//						
-//						try {
-//							o = Integer.parseInt(scan.nextLine());
-//						} catch (NumberFormatException e) {}
-//						
-//						switch(o) {
-//						
-//						case 1:
-//							log.info("Processing Request");
-//							break;
-//						case 2:
-//							log.info("Processing Request");
-//							break;
-//						case 3:
-//							log.info("Processing Request");
-//							break;
-//						case 4:
-//							log.info("Processing Request");
-//							break;
-//						case 5:
-//							log.info("Processing Request");
-//							break;
-//						case 6:
-//							log.info("Processing Request");
-//							break;
-//						case 7:
-//							log.info("Visit again");
-//							break;
-//						
-//						}
-//						
-//					}while(o!=7);
-				
 				break;
 			case 3:
 				log.info("\nWelcome to the Family");
