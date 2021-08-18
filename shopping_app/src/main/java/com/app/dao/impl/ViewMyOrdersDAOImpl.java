@@ -25,7 +25,7 @@ public class ViewMyOrdersDAOImpl implements ViewMyOrdersDAO {
 		try(Connection connection=MySqlDbConnection.getConnection()){
 			String sql = "select orders.productId ,orders.customerId,orders.orderStatus,products.productName,products.manufacturer,products.cost from orders join products on products.productId = orders.productId where orders.customerId =?;";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setInt(1, CustomerLoginDAOImpl.cd);
+			preparedStatement.setInt(1, order.getCustomerId());
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()) {
 				Order ordEr= new Order();

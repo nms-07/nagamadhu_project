@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.app.addProduct.service.impl.ProductAddServiceImpl;
 import com.app.customerRegister.service.impl.CustomerRegisterServiceImpl;
+import com.app.dao.CustomerLoginDAO;
 import com.app.dao.ProductAddDAO;
 import com.app.dao.impl.CustomerLoginDAOImpl;
 import com.app.dao.impl.ProductAddDAOImpl;
@@ -92,7 +93,8 @@ public class Main {
 						
 						break;
 					case 2:
-						log.info("Processing Request");
+						log.info("Enter the Product Id to update the cost");
+						
 						break;
 					case 3:
 						int opt = 0;
@@ -160,26 +162,6 @@ public class Main {
 								}
 								break;
 							case 4:
-//Mark the Status
-//								log.info("ENTER CUSTOMER ID");
-//								int id = 0;
-//								try {
-//									id = Integer.parseInt(scan.nextLine());
-//								} catch (NumberFormatException e) {}
-//								log.info("ENTER PRODUCT ID");
-//								int pid = 0;
-//								try {
-//									pid = Integer.parseInt(scan.nextLine());
-//								} catch (NumberFormatException e) {}
-//								MarkDeliveredServiceImpl markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
-//								try {
-//									Order order = new Order();
-//									order.setCustomerId(id);
-//									order.setProductId(pid);
-//									markDeliveredServiceImpl.markDelivered(order);
-//								}catch (BusinessException e) {
-//									System.out.println(e.getMessage());
-//								}
 								
 								break;
 							}
@@ -188,10 +170,20 @@ public class Main {
 					 break;
 					case 4:
 						log.info("ENTER CUSTOMER ID");
-						int id = 0;
+						int cid = 0;
 						try {
-							id = Integer.parseInt(scan.nextLine());
-						} catch (NumberFormatException e) {}
+							cid = Integer.parseInt(scan.nextLine());
+						}catch(NumberFormatException e) {}
+						Order oRder = new Order();
+						oRder.setCustomerId(cid);
+						ViewMyOrdersServiceImpl viewMyOrdersService = new ViewMyOrdersServiceImpl();
+						try {
+							log.info("Orders placed by Customer with Id"+" "+cid);
+							log.info(viewMyOrdersService.viewMyOrders(oRder));
+							
+						} catch (BusinessException e) {
+							System.out.println(e.getMessage());
+						}
 						log.info("ENTER PRODUCT ID");
 						int pid = 0;
 						try {
@@ -200,7 +192,7 @@ public class Main {
 						MarkDeliveredServiceImpl markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
 						try {
 							Order order = new Order();
-							order.setCustomerId(id);
+							order.setCustomerId(cid);
 							order.setProductId(pid);
 							markDeliveredServiceImpl.markDelivered(order);
 						}catch (BusinessException e) {
@@ -332,8 +324,10 @@ public class Main {
 								break;
 							case 6:
 								Order order = new Order();
+								order.setCustomerId(CustomerLoginDAOImpl.cd);
 								ViewMyOrdersServiceImpl viewMyOrdersService = new ViewMyOrdersServiceImpl();
 								try {
+									log.info("Orders you have placed");
 									log.info(viewMyOrdersService.viewMyOrders(order));
 									
 								} catch (BusinessException e) {

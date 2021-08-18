@@ -19,7 +19,7 @@ public class ViewMyOrdersServiceImpl implements ViewMyOrdersService{
 		List<Order> orderList = null;
 		try {
 			    orderList = viewMyOrdersDAO.viewMyOrders(order);
-				System.out.println("Orders you have placed! ");
+				//System.out.println("Orders you have placed! ");
 				
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
