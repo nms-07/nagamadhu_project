@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import com.app.dao.CustomerLoginDAO;
 import com.app.dao.dbutil.MySqlDbConnection;
 import com.app.exception.BusinessException;
+import com.app.model.Cart;
 import com.app.model.Customer;
 import com.mysql.cj.jdbc.result.ResultSetMetaData;
 
@@ -19,6 +20,7 @@ public class CustomerLoginDAOImpl implements CustomerLoginDAO {
 	public boolean customerLogin(String email, String password) throws BusinessException {
 		//StringBuilder sb = new StringBuilder();
 		boolean result = false;
+		//Cart cart = new Cart();
 		try(Connection connection=MySqlDbConnection.getConnection()){
 			//String sql="select exists(select * from customers where customerEmail = ? and customerPassword = ?);";
 			String sql = "select customerId,customerEmail,customerPassword from customers where customerEmail = ? and customerPassword = ?";	
@@ -27,6 +29,7 @@ public class CustomerLoginDAOImpl implements CustomerLoginDAO {
             preparedStatement.setString(2, password);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
+				//cart.setCustomerId(resultSet.getInt(1));
 				cd = resultSet.getInt(1);
 				result = true;
 			}

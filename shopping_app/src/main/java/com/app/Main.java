@@ -11,6 +11,7 @@ import com.app.dao.ProductAddDAO;
 import com.app.dao.impl.CustomerLoginDAOImpl;
 import com.app.dao.impl.ProductAddDAOImpl;
 import com.app.exception.BusinessException;
+import com.app.model.Cart;
 import com.app.model.Customer;
 import com.app.model.Product;
 import com.app.search.service.CustomerSearchService;
@@ -18,6 +19,8 @@ import com.app.search.service.impl.CustomerSearchServiceImpl;
 import com.app.service.impl.AddProductToCartServiceImpl;
 import com.app.service.impl.CustomerLoginServiceImpl;
 import com.app.service.impl.ListProductsServiceImpl;
+import com.app.service.impl.PlaceAnOrderServiceImpl;
+import com.app.service.impl.ViewCartServiceImpl;
 public class Main {
 	
 	private static Logger log = Logger.getLogger(Main.class);
@@ -224,22 +227,44 @@ public class Main {
 								} catch (NumberFormatException e) {}
 								AddProductToCartServiceImpl addProductToCartServiceimpl = new AddProductToCartServiceImpl();
 								try {
-									addProductToCartServiceimpl.addProductToCart(id);
+									Cart cart = new Cart();
+									cart.setProductId(id);
+									cart.setCustomerId(CustomerLoginDAOImpl.cd);
+									addProductToCartServiceimpl.addProductToCart(cart);
 								} catch (BusinessException e) {
 									System.out.println(e.getMessage());
 								}
-								
-								
-								
-								
-								
-								
 								break;
 							case 3:
-								log.info("Processing Request");
+								Cart cart = new Cart();
+								ViewCartServiceImpl viewCartServiceImpl = new ViewCartServiceImpl();
+								try {
+									log.info(viewCartServiceImpl.viewCart(cart));
+									
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
 								break;
 							case 4:
-								log.info("Processing Request");
+								Cart carrt = new Cart();
+								ViewCartServiceImpl viewCartServiceImpll = new ViewCartServiceImpl();
+								log.info(viewCartServiceImpll.viewCart(carrt));
+								log.info("Enter Product Id to place an order");
+								int pid = 0;
+								try {
+									pid = Integer.parseInt(scan.nextLine());
+								} catch (NumberFormatException e) {}
+								PlaceAnOrderServiceImpl placeAnOrderServiceImpl = new PlaceAnOrderServiceImpl();
+								try {
+									Cart carT = new Cart();
+									carT.setCustomerId(CustomerLoginDAOImpl.cd);
+									carT.setProductId(pid);
+									placeAnOrderServiceImpl.placeAnOrder(carT);
+								} catch (BusinessException e) {
+									System.out.println(e.getMessage());
+								}
+
+								
 								break;
 							case 5:
 								log.info("Processing Request");

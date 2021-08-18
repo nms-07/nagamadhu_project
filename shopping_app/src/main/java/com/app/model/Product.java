@@ -16,6 +16,9 @@ public class Product {
 	
 	public Product(int productId, String productName, String manufacturer2, double productCost) {
 	}
+	
+	public Product( String productName, String manufacturer2, double productCost) {
+	}
 
 
 
@@ -52,7 +55,12 @@ public class Product {
 	
 	@Override
 	public String toString() {
-		return "-------------Product [id=" + id + ", name=" + name + ", manufacturer=" + manufacturer + ", cost=" + cost + "]\n";
+		return "Product [id=" + id + ", name=" + name + ", manufacturer=" + manufacturer + ", cost=" + cost + "]\n";
 	}
+	
+	public String toSTring() {
+		return " productname=" + name + ", manufacturer=" + manufacturer + ", cost=" + cost + "\n";
+	}
+	
 
 }
