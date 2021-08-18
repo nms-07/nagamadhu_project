@@ -31,7 +31,7 @@ public class CustomerSearchDAOImpl implements CustomerSearchDAO{
 				customer.setCustomerName(resultSet.getString("customerName"));
 				customer.setCustomerEmail(resultSet.getString("customerEmail"));
 				customer.setCustomerPassword(resultSet.getString("customerPassword"));
-				//customer.setOrderId(resultSet.getInt("orderId"));
+				
 			}else {
 				throw new BusinessException("Entered customer id "+id+" doesnt exist");
 			}

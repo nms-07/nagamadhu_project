@@ -19,7 +19,7 @@ public class CustomerRegisterDAOImpl implements CustomerRegisterDAO {
 	public int customerRegister(Customer customer) throws BusinessException {
 		int c=0;
 		try(Connection connection=MySqlDbConnection.getConnection()){
-			String sql="insert into customers(customerId,customerName,customerEmail,customerPassword,orderId) values(?,?,?,?,?)";
+			String sql="insert into customers(customerId,customerName,customerEmail,customerPassword) values(?,?,?,?)";
 			
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt(1, customer.getCustomerId());
