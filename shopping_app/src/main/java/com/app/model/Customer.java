@@ -6,7 +6,7 @@ public class Customer {
 	private String customerName;
 	private String customerEmail;
 	private String customerPassword;
-	//private int orderId;
+	
 	
 	
 	public String getCustomerPassword() {
@@ -44,10 +44,11 @@ public class Customer {
 	@Override
 	public String toString() {
 		System.out.println("-------------------------------------------------------------------------------------------------------------");
-		return "Customer customerId=" + customerId + ", customerName=" + customerName + ", customerEmail="
-				+ customerEmail + ", customerPassword=" + customerPassword + "";
+		return "Customer customerId=" +customerId + ", customerName=" + customerName + ", customerEmail="
+				+ customerEmail + "";
 		
 	}
+	
 	
 
 	

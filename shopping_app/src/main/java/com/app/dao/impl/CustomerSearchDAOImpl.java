@@ -3,6 +3,7 @@ import com.app.dao.CustomerSearchDAO;
 import com.app.dao.dbutil.MySqlDbConnection;
 import com.app.exception.BusinessException;
 import com.app.model.Customer;
+import com.app.model.Order;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -100,8 +101,27 @@ public class CustomerSearchDAOImpl implements CustomerSearchDAO{
 
 	@Override
 	public Customer getCustomerByOrderId(int orderId) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer =null;
+		Order order = new Order();
+		try(Connection connection=MySqlDbConnection.getConnection()){
+			String sql="select  orderId,orders.customerId ,customers.customerName,customers.customerEmail  from orders join customers on orders.customerId = customers.customerId where orders.orderId =?" ;
+			PreparedStatement preparedStatement=connection.prepareStatement(sql);
+			preparedStatement.setInt(1, orderId);
+			ResultSet resultSet=preparedStatement.executeQuery();
+			if(resultSet.next()) {
+				order.setCustomerId(resultSet.getInt(1));
+				customer=new Customer();
+				customer.setCustomerName(resultSet.getString(2));
+				customer.setCustomerEmail(resultSet.getString(3));
+				
+			}else {
+				throw new BusinessException("Entered Order Id "+orderId+" doesnt exist");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			log.error(e);
+			throw new BusinessException("Internal error occured contact sysadmin");
+		}
+		return customer;
 	}
 	
 	

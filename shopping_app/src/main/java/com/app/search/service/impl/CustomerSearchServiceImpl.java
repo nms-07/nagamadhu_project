@@ -50,8 +50,16 @@ public class CustomerSearchServiceImpl implements CustomerSearchService {
 
 	@Override
 	public Customer getCustomerByOrderId(int orderId) throws BusinessException {
-		// TODO Auto-generated method stub
-		return null;
+		Customer customer = null;
+		if(orderId>1000) {
+			throw new BusinessException("Invalid Order Id "+orderId);
+		}else {
+			customer = customerSearchDAO.getCustomerById(orderId);
+			
+		}
+		return customer;
+	
+		
 	}
 
 	

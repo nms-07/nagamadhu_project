@@ -174,6 +174,20 @@ public class Main {
 								}
 								break;
 							case 4:
+								log.info("ENTER ORDER ID");
+								//int oId = 0;
+								try {
+									int oId=Integer.parseInt(scan.nextLine());
+									Customer customer= customerSearchService.getCustomerByOrderId(oId);
+									if(customer!=null) {
+										log.info("Customer with id "+oId+" found successfully...");
+										log.info(customer);
+									}
+									}catch(NumberFormatException e) {
+										log.warn("Order Id should be digit only... Try Again");
+									} catch (BusinessException e) {
+										log.warn(e.getMessage());
+									}
 								
 								break;
 							}
