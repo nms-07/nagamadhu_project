@@ -25,15 +25,17 @@ import com.app.service.CustomerLoginService;
 import com.app.service.ListProductsService;
 import com.app.service.MarkOrderStatusService;
 import com.app.service.PlaceAnOrderService;
+import com.app.service.ViewAllOrdersService;
 import com.app.service.ViewCartService;
 import com.app.service.ViewMyOrdersService;
 import com.app.service.impl.AddProductToCartServiceImpl;
 import com.app.service.impl.CustomerLoginServiceImpl;
 import com.app.service.impl.ListProductsServiceImpl;
-import com.app.service.impl.MarkDeliveredService;
+import com.app.service.MarkDeliveredService;
 import com.app.service.impl.MarkDeliveredServiceImpl;
 import com.app.service.impl.MarkOrderStatusServiceImpl;
 import com.app.service.impl.PlaceAnOrderServiceImpl;
+import com.app.service.impl.ViewAllOrderServiceImpl;
 import com.app.service.impl.ViewCartServiceImpl;
 import com.app.service.impl.ViewMyOrdersServiceImpl;
 public class Main {
@@ -179,33 +181,32 @@ public class Main {
 						 }while(opt!=5);
 					 break;
 					case 4:
-						log.info("ENTER CUSTOMER ID");
-						int cid = 0;
+						Order order = new Order();
+						ViewAllOrdersService viewAllOrdersService = new ViewAllOrderServiceImpl();
 						try {
-							cid = Integer.parseInt(scan.nextLine());
-						}catch(NumberFormatException e) {}
-						Order oRder = new Order();
-						oRder.setCustomerId(cid);
-						ViewMyOrdersService viewMyOrdersService = new ViewMyOrdersServiceImpl();
-						try {
-							log.info("Orders placed by Customer with Id"+" "+cid);
-							log.info(viewMyOrdersService.viewMyOrders(oRder));
+							log.info("Orders placed by Customers are");
+							log.info(viewAllOrdersService.viewAllOrders(order));
 							
 						} catch (BusinessException e) {
 							System.out.println(e.getMessage());
 						}
-						log.info("ENTER PRODUCT ID");
-						int pid = 0;
+						log.info("ENTER ORDER ID");
+						int oid = 0;
 						try {
-							pid = Integer.parseInt(scan.nextLine());
-						} catch (NumberFormatException e) {}
+							oid = Integer.parseInt(scan.nextLine());
+						}catch(NumberFormatException e) {}
+						ViewMyOrdersService viewMyOrdersService = new ViewMyOrdersServiceImpl();
+//						log.info("ENTER PRODUCT ID");
+//						int pid = 0;
+//						try {
+//							pid = Integer.parseInt(scan.nextLine());
+//						} catch (NumberFormatException e) {}
 						MarkDeliveredService markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
 						try {
-							Order order = new Order();
-							order.setCustomerId(cid);
-							order.setProductId(pid);
-							log.info("Delivered the product successfully!");
-							markDeliveredServiceImpl.markDelivered(order);
+							Order orDer = new Order();
+							orDer.setOrderId(oid);
+							log.info("Shipped the product successfully!");
+							markDeliveredServiceImpl.markDelivered(orDer);
 						}catch (BusinessException e) {
 							System.out.println(e.getMessage());
 						}
@@ -298,12 +299,7 @@ public class Main {
 								    } catch (BusinessException e) {
 									log.warn(e.getMessage());
 								    }
-//								Cart cart = new Cart();
-//								ViewCartService viewCartService = new ViewCartServiceImpl();
-//								List<Cart> caRT = viewCartService.viewCart(cart);
-//								for(Cart x : caRT) {
-//									log.info(x);
-//								}
+//		
 //								Cart cart = new Cart();
 //								ViewCartService viewCartServiceImpl = new ViewCartServiceImpl();
 //								try {
@@ -316,16 +312,16 @@ public class Main {
 								Cart carrt = new Cart();
 								ViewCartService viewCartServiceImpll = new ViewCartServiceImpl();
 								log.info(viewCartServiceImpll.viewCart(carrt));
-								log.info("Enter Product Id to place an order");
-								int pid = 0;
-								try {
-									pid = Integer.parseInt(scan.nextLine());
-								} catch (NumberFormatException e) {}
+								//log.info("Enter Product Id to place an order");
+//								int pid = 0;
+//								try {
+//									pid = Integer.parseInt(scan.nextLine());
+//								} catch (NumberFormatException e) {}
 								PlaceAnOrderService placeAnOrderServiceImpl = new PlaceAnOrderServiceImpl();
 								try {
 									Cart carT = new Cart();
 									carT.setCustomerId(CustomerLoginDAOImpl.cd);
-									carT.setProductId(pid);
+									//carT.setProductId(pid);
 									placeAnOrderServiceImpl.placeAnOrder(carT);
 								} catch (BusinessException e) {
 									System.out.println(e.getMessage());
@@ -334,16 +330,16 @@ public class Main {
 								
 								break;
 							case 5:
-								log.info("Enter the Product Id to mark it as Received");
-								int prid = 0;
+								log.info("Enter the Order Id to mark it as Received");
+								int oid = 0;
 								try {
-									prid = Integer.parseInt(scan.nextLine());
+									oid = Integer.parseInt(scan.nextLine());
 								} catch (NumberFormatException e) {}
 								MarkOrderStatusService markOrderServiceImpl = new MarkOrderStatusServiceImpl();
 								try {
 									Order order = new Order();
 									order.setCustomerId(CustomerLoginDAOImpl.cd);
-									order.setProductId(prid);
+									order.setOrderId(oid);
 									log.info("Changed the order status successfully!");
 									markOrderServiceImpl.markOrderStatus(order);
 								}catch (BusinessException e) {

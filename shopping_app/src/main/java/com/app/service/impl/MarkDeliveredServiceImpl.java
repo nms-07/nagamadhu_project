@@ -4,6 +4,7 @@ import com.app.dao.MarkDeliveredDAO;
 import com.app.dao.impl.MarkDeliveredDAOImpl;
 import com.app.exception.BusinessException;
 import com.app.model.Order;
+import com.app.service.MarkDeliveredService;
 
 public class MarkDeliveredServiceImpl implements MarkDeliveredService {
 	
@@ -13,7 +14,7 @@ public class MarkDeliveredServiceImpl implements MarkDeliveredService {
 	public int markDelivered(Order order) throws BusinessException {
 		try {
 			if (markDeliveredDAO.markDelivered(order)==1) {
-				System.out.println("Updated the Order Status to delivered");
+				System.out.println("Updated the Order Status to shipped");
 				
 		}
 		} catch (BusinessException e) {

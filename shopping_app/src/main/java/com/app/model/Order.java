@@ -2,6 +2,7 @@ package com.app.model;
 
 public class Order {
 
+	private int orderId;
 	private int customerId;
 	private int productId;
 	private String orderStatus;
@@ -30,11 +31,18 @@ public class Order {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
 	@Override
 	public String toString() {
-		return "Order [customerId=" + customerId + ", productId=" + productId + ", orderStatus=" + orderStatus
-				+ product.toSTring() + "\n";
+		return "Order orderId=" + orderId + ", customerId=" + customerId + ", productId=" + productId
+				+ ", orderStatus=" + orderStatus +  product.toSTring() + "";
 	}
+	
 	
 	
 	

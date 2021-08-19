@@ -15,16 +15,15 @@ public class PlaceAnOrderDAOImpl implements PlaceAnOrderDAO  {
 	public int placeAnOrder(Cart cart) throws BusinessException {
 		int d = 0;
 		try(Connection connection=MySqlDbConnection.getConnection()){
-			String sql="insert into orders(customerId,productId,orderStatus) values(?,?,'ordered')";
+			String sql="insert into orders(customerId,productId) select customerId,productId from cart where customerId = ? ;";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			
 			preparedStatement.setInt(1, cart.getCustomerId());
-			preparedStatement.setInt(2, cart.getProductId());
 			preparedStatement.executeUpdate();
-	
-			String sqL = "delete from cart where productId = ?";
+			
+			String sqL = "delete from cart where customerId = ?";
 			PreparedStatement preparedStatemenT =connection.prepareStatement(sqL);
-			preparedStatemenT.setInt(1, cart.getProductId());
+			preparedStatemenT.setInt(1, cart.getCustomerId());
 			d = preparedStatemenT.executeUpdate();
 		
 		} catch (ClassNotFoundException | SQLException e) {

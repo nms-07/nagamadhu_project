@@ -15,10 +15,9 @@ public class MarkDeliveredDAOImpl implements MarkDeliveredDAO{
 	public int markDelivered(Order order) throws BusinessException {
 		int c = 0;
 		try(Connection connection=MySqlDbConnection.getConnection()){
-			String sql="update orders set orderStatus = 'delivered' where customerId = ? and productId = ?";
+			String sql="update orders set orderStatus = 'shipped' where orderId =?";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
-			preparedStatement.setInt(1, order.getCustomerId());
-			preparedStatement.setInt(2, order.getProductId());
+			preparedStatement.setInt(1, order.getOrderId());
 			c = preparedStatement.executeUpdate();
 		
 		} catch (ClassNotFoundException | SQLException e) {

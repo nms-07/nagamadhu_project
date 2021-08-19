@@ -14,12 +14,12 @@ public class MarkOrderStatusDAOImpl implements MarkOrderStatusDAO {
 	@Override
 	public int markOrderStatus(Order order) throws BusinessException {
 		int c = 0;
-		int d = 0;
+		//int d = 0;
 		try(Connection connection=MySqlDbConnection.getConnection()){
-			String sql="update orders set orderStatus = 'received' where customerId = ? and productId = ?";
+			String sql="update orders set orderStatus = 'received' where customerId = ? and orderId = ?";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt(1, order.getCustomerId());
-			preparedStatement.setInt(2, order.getProductId());
+			preparedStatement.setInt(2, order.getOrderId());
 			c = preparedStatement.executeUpdate();
 			
 			
@@ -32,7 +32,7 @@ public class MarkOrderStatusDAOImpl implements MarkOrderStatusDAO {
 			//log.error(e);
 			throw new BusinessException("Internal error occured contact sysadmin");
 		}
-		return d;
+		return c;
 	}
 
 	

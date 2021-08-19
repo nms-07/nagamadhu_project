@@ -23,19 +23,21 @@ public class ViewMyOrdersDAOImpl implements ViewMyOrdersDAO {
 	public List<Order> viewMyOrders(Order order) throws BusinessException {
 		List<Order> ordersList = new ArrayList<>();
 		try(Connection connection=MySqlDbConnection.getConnection()){
-			String sql = "select orders.productId ,orders.customerId,orders.orderStatus,products.productName,products.manufacturer,products.cost from orders join products on products.productId = orders.productId where orders.customerId =?;";
+			String sql = "select orders.orderId,orders.productId ,orders.customerId,orders.orderStatus,products.productName,products.manufacturer,products.cost from orders join products on products.productId = orders.productId where orders.customerId =?;";
 			PreparedStatement preparedStatement=connection.prepareStatement(sql);
 			preparedStatement.setInt(1, order.getCustomerId());
+			//preparedStatement.setInt(2, order.getOrderId());
 			ResultSet resultSet=preparedStatement.executeQuery();
 			while(resultSet.next()) {
 				Order ordEr= new Order();
-				ordEr.setProductId(resultSet.getInt(1));
-				ordEr.setCustomerId(resultSet.getInt(2));
-				ordEr.setOrderStatus(resultSet.getString(3));
+				ordEr.setOrderId(resultSet.getInt(1));
+				ordEr.setProductId(resultSet.getInt(2));
+				ordEr.setCustomerId(resultSet.getInt(3));
+				ordEr.setOrderStatus(resultSet.getString(4));
 				Product product=new Product();
-				product.setName(resultSet.getString(4));
-				product.setManufacturer(resultSet.getString(5));
-				product.setCost(resultSet.getDouble(6));
+				product.setName(resultSet.getString(5));
+				product.setManufacturer(resultSet.getString(6));
+				product.setCost(resultSet.getDouble(7));
 				ordEr.setProduct(product);
 				ordersList.add(ordEr);
 			}
