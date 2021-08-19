@@ -5,7 +5,9 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.app.addProduct.service.ProductAddService;
 import com.app.addProduct.service.impl.ProductAddServiceImpl;
+import com.app.customerRegister.service.CustomerRegisterService;
 import com.app.customerRegister.service.impl.CustomerRegisterServiceImpl;
 import com.app.dao.CustomerLoginDAO;
 import com.app.dao.ProductAddDAO;
@@ -18,9 +20,17 @@ import com.app.model.Order;
 import com.app.model.Product;
 import com.app.search.service.CustomerSearchService;
 import com.app.search.service.impl.CustomerSearchServiceImpl;
+import com.app.service.AddProductToCartService;
+import com.app.service.CustomerLoginService;
+import com.app.service.ListProductsService;
+import com.app.service.MarkOrderStatusService;
+import com.app.service.PlaceAnOrderService;
+import com.app.service.ViewCartService;
+import com.app.service.ViewMyOrdersService;
 import com.app.service.impl.AddProductToCartServiceImpl;
 import com.app.service.impl.CustomerLoginServiceImpl;
 import com.app.service.impl.ListProductsServiceImpl;
+import com.app.service.impl.MarkDeliveredService;
 import com.app.service.impl.MarkDeliveredServiceImpl;
 import com.app.service.impl.MarkOrderStatusServiceImpl;
 import com.app.service.impl.PlaceAnOrderServiceImpl;
@@ -84,7 +94,7 @@ public class Main {
 						product.setName(productName);
 						product.setManufacturer(manufacturer);
 						product.setCost(productCost);
-						ProductAddServiceImpl productserviceimpl = new ProductAddServiceImpl();
+						ProductAddService productserviceimpl = new ProductAddServiceImpl();
 						try {
 							productserviceimpl.addProduct(product);
 						} catch (BusinessException e) {
@@ -176,7 +186,7 @@ public class Main {
 						}catch(NumberFormatException e) {}
 						Order oRder = new Order();
 						oRder.setCustomerId(cid);
-						ViewMyOrdersServiceImpl viewMyOrdersService = new ViewMyOrdersServiceImpl();
+						ViewMyOrdersService viewMyOrdersService = new ViewMyOrdersServiceImpl();
 						try {
 							log.info("Orders placed by Customer with Id"+" "+cid);
 							log.info(viewMyOrdersService.viewMyOrders(oRder));
@@ -189,11 +199,12 @@ public class Main {
 						try {
 							pid = Integer.parseInt(scan.nextLine());
 						} catch (NumberFormatException e) {}
-						MarkDeliveredServiceImpl markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
+						MarkDeliveredService markDeliveredServiceImpl = new MarkDeliveredServiceImpl();
 						try {
 							Order order = new Order();
 							order.setCustomerId(cid);
 							order.setProductId(pid);
+							log.info("Delivered the product successfully!");
 							markDeliveredServiceImpl.markDelivered(order);
 						}catch (BusinessException e) {
 							System.out.println(e.getMessage());
@@ -210,7 +221,7 @@ public class Main {
 				Customer customer = new Customer();
 				customer.setCustomerEmail(customerEmail);
 				customer.setCustomerPassword(customerPassword);
-				CustomerLoginServiceImpl customerlogin = new CustomerLoginServiceImpl();
+				CustomerLoginService customerlogin = new CustomerLoginServiceImpl();
 				try {
 					if (customerlogin.customerLogin(customerEmail,customerPassword)) {
 						log.info("Logged In successfully");
@@ -246,7 +257,7 @@ public class Main {
 							
 							case 1:
 								Product product = new Product();
-								ListProductsServiceImpl listProductsServiceimpl = new ListProductsServiceImpl();
+								ListProductsService listProductsServiceimpl = new ListProductsServiceImpl();
 								try {
 									log.info(listProductsServiceimpl.listProducts(product));
 									
@@ -257,14 +268,14 @@ public class Main {
 							case 2:
 								Product p = new Product();
 								 //int cId = CustomerLoginDAOImpl.cd;
-								ListProductsServiceImpl listimpl = new ListProductsServiceImpl();
+								ListProductsService listimpl = new ListProductsServiceImpl();
 								System.out.println(listimpl.listProducts(p));
 								log.info("Enter the Product Id to add in the Cart");
 								int id = 0;
 								try {
 									id = Integer.parseInt(scan.nextLine());
 								} catch (NumberFormatException e) {}
-								AddProductToCartServiceImpl addProductToCartServiceimpl = new AddProductToCartServiceImpl();
+								AddProductToCartService addProductToCartServiceimpl = new AddProductToCartServiceImpl();
 								try {
 									Cart cart = new Cart();
 									cart.setProductId(id);
@@ -275,25 +286,42 @@ public class Main {
 								}
 								break;
 							case 3:
-								Cart cart = new Cart();
-								ViewCartServiceImpl viewCartServiceImpl = new ViewCartServiceImpl();
 								try {
-									log.info(viewCartServiceImpl.viewCart(cart));
-									
-								} catch (BusinessException e) {
-									System.out.println(e.getMessage());
-								}
+									Cart cart = new Cart();
+									ViewCartService viewCartService = new ViewCartServiceImpl();
+									List<Cart> caRT = viewCartService.viewCart(cart);
+									if(caRT!=null) {
+										for(Cart x:caRT) {
+											log.info(x);
+										}
+									 }
+								    } catch (BusinessException e) {
+									log.warn(e.getMessage());
+								    }
+//								Cart cart = new Cart();
+//								ViewCartService viewCartService = new ViewCartServiceImpl();
+//								List<Cart> caRT = viewCartService.viewCart(cart);
+//								for(Cart x : caRT) {
+//									log.info(x);
+//								}
+//								Cart cart = new Cart();
+//								ViewCartService viewCartServiceImpl = new ViewCartServiceImpl();
+//								try {
+//										log.info(viewCartServiceImpl.viewCart(cart));		
+//								} catch (BusinessException e) {
+//									System.out.println(e.getMessage());
+//								}
 								break;
 							case 4:
 								Cart carrt = new Cart();
-								ViewCartServiceImpl viewCartServiceImpll = new ViewCartServiceImpl();
+								ViewCartService viewCartServiceImpll = new ViewCartServiceImpl();
 								log.info(viewCartServiceImpll.viewCart(carrt));
 								log.info("Enter Product Id to place an order");
 								int pid = 0;
 								try {
 									pid = Integer.parseInt(scan.nextLine());
 								} catch (NumberFormatException e) {}
-								PlaceAnOrderServiceImpl placeAnOrderServiceImpl = new PlaceAnOrderServiceImpl();
+								PlaceAnOrderService placeAnOrderServiceImpl = new PlaceAnOrderServiceImpl();
 								try {
 									Cart carT = new Cart();
 									carT.setCustomerId(CustomerLoginDAOImpl.cd);
@@ -311,11 +339,12 @@ public class Main {
 								try {
 									prid = Integer.parseInt(scan.nextLine());
 								} catch (NumberFormatException e) {}
-								MarkOrderStatusServiceImpl markOrderServiceImpl = new MarkOrderStatusServiceImpl();
+								MarkOrderStatusService markOrderServiceImpl = new MarkOrderStatusServiceImpl();
 								try {
 									Order order = new Order();
 									order.setCustomerId(CustomerLoginDAOImpl.cd);
 									order.setProductId(prid);
+									log.info("Changed the order status successfully!");
 									markOrderServiceImpl.markOrderStatus(order);
 								}catch (BusinessException e) {
 									System.out.println(e.getMessage());
@@ -325,7 +354,7 @@ public class Main {
 							case 6:
 								Order order = new Order();
 								order.setCustomerId(CustomerLoginDAOImpl.cd);
-								ViewMyOrdersServiceImpl viewMyOrdersService = new ViewMyOrdersServiceImpl();
+								ViewMyOrdersService viewMyOrdersService = new ViewMyOrdersServiceImpl();
 								try {
 									log.info("Orders you have placed");
 									log.info(viewMyOrdersService.viewMyOrders(order));
@@ -382,7 +411,7 @@ public class Main {
 						customerc.setCustomerName(name);
 						customerc.setCustomerEmail(email);
 						customerc.setCustomerPassword(password);
-						CustomerRegisterServiceImpl customerRegisterserviceimpl = new CustomerRegisterServiceImpl();
+						CustomerRegisterService customerRegisterserviceimpl = new CustomerRegisterServiceImpl();
 						try {
 							customerRegisterserviceimpl.registerCustomer(customerc);
 						} catch (BusinessException e) {

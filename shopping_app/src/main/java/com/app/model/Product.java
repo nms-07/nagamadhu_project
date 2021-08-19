@@ -59,7 +59,7 @@ public class Product {
 	}
 	
 	public String toSTring() {
-		return " productname=" + name + ", manufacturer=" + manufacturer + ", cost=" + cost + "\n";
+		return " productname=" + name + ", manufacturer=" + manufacturer + ", cost=" + cost + "";
 	}
 	
 

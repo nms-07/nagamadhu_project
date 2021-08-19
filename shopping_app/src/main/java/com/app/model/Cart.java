@@ -28,7 +28,8 @@ public class Cart {
 	}
 	@Override
 	public String toString() {
-		return "\nCart productId=" + productId + ", customerId=" + customerId + ","+ product.toSTring() + "";
+		System.out.println("--------------------------------------------------------------------------------------");
+		return "Cart productId=" + productId + ", customerId=" + customerId + ","+ product.toSTring() + "";
 	}
 	
 	
