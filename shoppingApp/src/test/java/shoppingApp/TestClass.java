@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
 import com.app.addProduct.service.impl.ProductAddServiceImpl;
+import com.app.customerRegister.service.impl.CustomerRegisterServiceImpl;
 import com.app.dao.impl.AddProductToCartDAOImpl;
 import com.app.dao.impl.CustomerLoginDAOImpl;
 import com.app.dao.impl.CustomerSearchDAOImpl;
@@ -126,6 +127,39 @@ class TestClass {
 		}
 	}
 	
-
+	
+	ProductAddServiceImpl productAdd = new ProductAddServiceImpl();
+	
+	@Test
+	public void testProductAdd() {
+		Product product = new Product();
+		product.setId(192);
+		product.setName("Mouse");
+		product.setManufacturer("Logitech");
+		product.setCost(20000);
+		try {
+			assertEquals(1,productAdd.addProduct(product));
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			fail(e.getMessage());
+		}
+	}
+	
+	
+	CustomerRegisterServiceImpl customerRegister = new CustomerRegisterServiceImpl();
+	
+	@Test
+	public void testCustomerRegister() {
+		Customer customer = new Customer();
+		customer.setCustomerId(41);
+		customer.setCustomerEmail("nmadh@gmail.com");
+		customer.setCustomerName("Madhu");
+		customer.setCustomerPassword("Q19@ghjd");
+		try {
+			assertEquals(0,customerRegister.registerCustomer(customer));
+		} catch (BusinessException e) {
+			fail(e.getMessage());
+		}
+	}
 	
 }

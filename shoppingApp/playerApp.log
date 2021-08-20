@@ -2478,3 +2478,4 @@ Welcome
 [main] 2021-08-20 12:15:57 INFO  shoppingApp.TestClass  - Internal error occured contact sysadmin
 [main] 2021-08-20 12:17:07 ERROR com.app.dao.impl.AddProductToCartDAOImpl  - java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`shopping_app`.`cart`, CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `customers` (`customerId`))
 [main] 2021-08-20 12:17:07 INFO  shoppingApp.TestClass  - Internal error occured contact sysadmin
+[main] 2021-08-20 12:59:56 INFO  com.app.addProduct.service.impl.ProductAddServiceImpl  - Product Id=192, Name=Mouse, Manufacturer=Logitech, Cost=20000.0

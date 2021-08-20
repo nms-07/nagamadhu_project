@@ -14,14 +14,12 @@ public class CustomerRegisterServiceImpl implements CustomerRegisterService {
 	public int registerCustomer(Customer customer) throws BusinessException {
 		try {
 			if (customerRegisterDAO.customerRegister(customer) == 1) {
-				System.out.println("Customer registered with below details successfully");
-				System.out.println(customer);
 				
 		}
 		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
+			throw new BusinessException(e.getMessage());
 		}
-		return 0;
+		return 1;
 	}
 
 	

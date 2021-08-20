@@ -470,6 +470,8 @@ public class Main {
 						CustomerRegisterService customerRegisterserviceimpl = new CustomerRegisterServiceImpl();
 						try {
 							customerRegisterserviceimpl.registerCustomer(customerc);
+							log.info("Customer registered with below details successfully");
+							log.info(customerc);
 						} catch (BusinessException e) {
 							System.out.println(e.getMessage());
 						}
