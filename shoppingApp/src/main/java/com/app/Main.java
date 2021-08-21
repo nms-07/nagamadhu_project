@@ -315,10 +315,10 @@ public class Main {
 										}
 									 }
 								    } catch (BusinessException e) {
-									log.warn(e.getMessage());
+									log.info(e.getMessage());
 								    }
 								log.info(" ");
-								log.info("Enter the Product Id to add in the Cart");
+								//log.info("Enter the Product Id to add in the Cart");
 								int id = 0;
 								try {
 									id = Integer.parseInt(scan.nextLine());

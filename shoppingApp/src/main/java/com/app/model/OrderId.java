@@ -27,7 +27,7 @@ public class OrderId {
 	@Override
 	public String toString() {
 		System.out.println("---------------------------------------------------------------------------------");
-		return ", "+order.toSTring() + ", CustomerName=" + customerName + ", CustomerEmail="
+		return order.toSTring() + ", CustomerName=" + customerName + ", CustomerEmail="
 				+ customerEmail ;
 	}
 	

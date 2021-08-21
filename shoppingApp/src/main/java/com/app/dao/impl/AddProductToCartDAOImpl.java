@@ -30,7 +30,7 @@ public class AddProductToCartDAOImpl implements AddProductToCartDAO {
 		
 		} catch (ClassNotFoundException | SQLException e) {
 			log.error(e);
-			throw new BusinessException("Internal error occured contact sysadmin");
+			throw new BusinessException("Product Id doesn't exist");
 		}
 		return c;
 	}
